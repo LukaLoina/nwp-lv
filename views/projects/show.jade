@@ -1,0 +1,11 @@
+extends ../layout
+
+block content
+    h1.
+        Podaci o projektu #{project._id}
+    p Naziv: #{project.naziv}
+    p Opis: #{project.opis}
+    p Cijena: #{project.cijena}
+    p Obavljeni poslovi: #{project.obavljeni_poslovi}
+    p Datum Početka: #{project.datum_pocetka}
+    p Datum završetka: #{project.datum_zavrsetka}

@@ -1,0 +1,24 @@
+extends ../layout
+
+block content
+  h1.
+    #{title}
+    
+  form(action='/projects/#{project._id}/edit', method='post', name='updateproject', enctype='application/x-www-form-urlencoded')
+    input(type='hidden',value='PUT',name='_method')
+    p Naziv:
+      input#inputNaziv(type="text", placeholder="Naziv projekta", name="naziv", value='#{project.naziv}', required)
+    p Opis:
+      input#inputOpis(type="text", placeholder="Opis projekta", name="opis", value='#{project.opis}', required)
+    p Cijena: 
+    input#inputCijena(type="number", placeholder="Cijena projekta", name="cijena", value='#{project.cijena}', required)
+    p	Obavljeni poslovi:  
+      textarea#inputObavljeniPoslovi(name="obavljeni_poslovi")
+        | #{project.obavljeni_poslovi}
+    p   Početak:  
+      input#inputPocetak(type="date", name="datum_pocetka", value='#{datumpocetka}', required)
+    p   Završetak:
+      input#inputZavrsetak(type="date", name="datum_zavrsetka", value='#{datumzavrsetka}', required)
+    p
+      button#btnSubmit(type='submit').
+        Update
