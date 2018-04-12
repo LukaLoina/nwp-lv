@@ -12,12 +12,17 @@ router.use(methodOverride(function(req, res){
       }
 }))
 
-// GET home page
+// početna stranica
 router.get('/', function (req, res, next) {
+
+  // Dohvaćamo sve projekte
   mongoose.model('Project').find({}, function (err, projects) {
+
+    // Ako je error ispišemo u konzolu
     if (err) {
       return console.error(err);
     } else {
+      // Vratimo pogled
       res.format({
         html: function() {
           res.render('projects/index', {
@@ -33,12 +38,12 @@ router.get('/', function (req, res, next) {
   });
 });
 
-// GET novi projekt
+// Novi projekt - stranica sa formom, samo vratimo pogled
 router.get('/new', function(req, res) {
     res.render('projects/new', { title: 'Novi Projekt' });
 });
 
-// POST a new project
+// Kreiranje novog projekta
 router.post('/', function(req, res) {
 
   // Pokupi sve podatke iz requesta
@@ -108,27 +113,29 @@ router.param('id', function(req, res, next, id) {
     });
 });
 
+// Pregledavanje pojedinačnog projekta po ID
 router.get('/:id', function(req, res) {
 
-    mongoose.model('Project').findById(req.id, function (err, project) {
-      if (err) {
-        console.log('GET Error: There was a problem retrieving: ' + err);
-      } else {
+  mongoose.model('Project').findById(req.id, function (err, project) {
+    if (err) {
+      console.log('GET Error: There was a problem retrieving: ' + err);
+    } else {
 
-        res.format({
-          html: function(){
-              res.render('projects/show', {
-                "project" : project
-              });
-          },
-          json: function(){
-              res.json(project);
-          }
-        });
-      }
-    });
+      res.format({
+        html: function(){
+            res.render('projects/show', {
+              "project" : project
+            });
+        },
+        json: function(){
+            res.json(project);
+        }
+      });
+    }
   });
+});
 
+// Uređivanje projekta po ID (otvaranje forme, PUT zahtjeva kojim ažuriramo projekt i DELETE zahtjev kojim ga brišemo)
 router.route('/:id/edit')
 
   // Otvaranje forme za editiranje
@@ -139,6 +146,7 @@ router.route('/:id/edit')
 	            console.log('GET Error: There was a problem retrieving: ' + err);
 	        } else {
 
+            // Pretvaranje datuma u čitkiji oblik
             var datumpocetka = project.datum_pocetka.toISOString();
             datumpocetka = datumpocetka.substring(0, datumpocetka.indexOf('T'));
 
@@ -198,7 +206,6 @@ router.route('/:id/edit')
 
             res.format({
               html: function(){
-                console.log("in return");
                   res.redirect("/projects/"+project._id);
               },
               json: function(){
@@ -240,5 +247,64 @@ router.route('/:id/edit')
 	        }
 	    });
 	});
+
+// Dodavanje članova u projekt
+router.route('/:id/member')
+    // Otvaranje forme za editiranje
+    .get(function(req, res) {
+
+        mongoose.model('Project').findById(req.id, function (err, project) {
+            if (err) {
+                console.log('GET Error: There was a problem retrieving: ' + err);
+            } else {
+
+              res.format({
+                  //HTML response will render the 'edit.jade' template
+                  html: function(){
+                         res.render('projects/member', {
+                            title: 'Add member to project ' + project._id,
+                            "project" : project
+                        });
+                   },
+                   //JSON response will return the JSON output
+                  json: function(){
+                         res.json(project);
+                   }
+              });
+            }
+        });
+    })
+
+  // Dodavanje člana (submit u bazu)
+	.post(function(req, res) {
+
+    // Pokupi sve podatke iz requesta
+    var ime = req.body.ime;
+
+    // Pronađi zapis
+    mongoose.model('Project').findById(req.id, function (err, project) {
+
+      project.clanovi_tima.push(ime);
+      project.save(function (err) {
+        if (err) {
+          res.send("There was a problem updating the information to the database: " + err);
+        }
+        else {
+
+          // Ako je uspješno, redirectaj ga na pregled projekta
+
+          res.format({
+            html: function(){
+                res.redirect("/projects/"+project._id);
+            },
+            json: function(){
+                res.json(project);
+             }
+          });
+         }
+      });
+
+    });
+	})
 
 module.exports = router;

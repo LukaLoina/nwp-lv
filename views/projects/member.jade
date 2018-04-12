@@ -1,0 +1,12 @@
+extends ../layout
+
+block content
+  h1.
+    #{title}
+    
+  form(action='/projects/#{project._id}/member', method='post', name='updateprojectmember', enctype='application/x-www-form-urlencoded')
+    p Ime člana projektnog tima:
+      input#inputIme(type="text", placeholder="Ime člana", name="ime", required)
+    p
+      button#btnSubmit(type='submit').
+        Dodaj

@@ -29,8 +29,10 @@ block content
                 form(action='/projects/#{project._id}/edit',method='post',enctype='application/x-www-form-urlencoded')
                     input(type='hidden',value='DELETE',name='_method')
                     button(type='submit').
-                        Delete
+                        Obriši
                 p 
-                    a(href='/projects/#{project._id}/edit') Edit
+                    a(href='/projects/#{project._id}/edit') Uredi
                 p
-                    a(href='/projects/#{project._id}') Show
+                    a(href='/projects/#{project._id}') Prikaži
+                p
+                    a(href='/projects/#{project._id}/member') Dodaj člana

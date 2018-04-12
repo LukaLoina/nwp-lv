@@ -9,3 +9,10 @@ block content
     p Obavljeni poslovi: #{project.obavljeni_poslovi}
     p Datum Početka: #{project.datum_pocetka}
     p Datum završetka: #{project.datum_zavrsetka}
+    p Članovi tima:
+    
+    ol
+      each clan in project.clanovi_tima
+        li
+          = clan
+        
