@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  p Ispunite obrazac za registraciju
+  form(action='/register',method='post')
+    p
+    input(type='text',name='name',placeholder='Korisničko ime')
+    p
+    input(type='password',name='pass',placeholder='Lozinka')
+    p
+    input(type='submit',value='Prijavi se')
+ 

@@ -3,15 +3,33 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var session = require('express-session');
+var methodOverride = require('method-override');
 
 var db = require('./model/db'),
-    project = require('./model/project');
+    project = require('./model/project'),
+    userModel = require('./model/user');
+
+var userMiddleware = require('./lib/middleware/user');
 
 var indexRouter = require('./routes/index');
 var projectRouter = require('./routes/projects');
+var loginRouter = require('./routes/login');
+var logoutRouter = require('./routes/logout');
+var registerRouter = require('./routes/register');
 //var usersRouter = require('./routes/users');
 
 var app = express();
+
+app.use(methodOverride('X-HTTP-Method-Override'));
+app.use(session({
+    secret: 'tajna rijec',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }
+}))
+
+app.use(userMiddleware);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -25,6 +43,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/projects', projectRouter);
+app.use('/login', loginRouter);
+app.use('/logout', logoutRouter);
+app.use('/register', registerRouter);
 //app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler

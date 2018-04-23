@@ -1,0 +1,19 @@
+extends ../layout
+
+block content
+  h1.
+    #{title}
+    
+  form(action='/projects/#{project._id}/edit', method='post', name='updateproject', enctype='application/x-www-form-urlencoded')
+    input(type='hidden',value='PUT',name='_method')
+    p Naziv: #{project.naziv}
+    p Opis: #{project.opis}
+    p Cijena: #{project.cijena}
+    p Obavljeni poslovi:  
+      textarea#inputObavljeniPoslovi(name="obavljeni_poslovi")
+        | #{project.obavljeni_poslovi}
+    p Početak: #{datumpocetka}
+    p Završetak: #{datumzavrsetka}
+    p
+      button#btnSubmit(type='submit').
+        Ažuriraj

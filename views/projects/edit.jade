@@ -12,13 +12,18 @@ block content
       input#inputOpis(type="text", placeholder="Opis projekta", name="opis", value='#{project.opis}', required)
     p Cijena: 
     input#inputCijena(type="number", placeholder="Cijena projekta", name="cijena", value='#{project.cijena}', required)
-    p	Obavljeni poslovi:  
+    p Obavljeni poslovi:  
       textarea#inputObavljeniPoslovi(name="obavljeni_poslovi")
         | #{project.obavljeni_poslovi}
     p   Početak:  
       input#inputPocetak(type="date", name="datum_pocetka", value='#{datumpocetka}', required)
     p   Završetak:
       input#inputZavrsetak(type="date", name="datum_zavrsetka", value='#{datumzavrsetka}', required)
+    p   Arhiviran projekt:
+      if project.arhiviran
+        input(type="checkbox", name="arhiviran", checked, value='true')
+      else
+        input(type="checkbox", name="arhiviran", value='true')
     p
       button#btnSubmit(type='submit').
         Ažuriraj

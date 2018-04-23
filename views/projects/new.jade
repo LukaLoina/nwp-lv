@@ -5,17 +5,17 @@ block content
 		#{title}
 		
 	form#formAddProject(name="addproject", method="post", action="/projects")
-		p	Naziv:	
+		p Naziv:	
 			input#inputNaziv(type="text", placeholder="Naziv projekta", name="naziv", required)
-		p	Opis:	
+		p Opis:	
 			input#inputOpis(type="text", placeholder="Opis projekta", name="opis", required)
-		p	Cijena:	
+		p Cijena:	
 			input#inputCijena(type="number", placeholder="Cijena projekta", name="cijena", required)
-		p	Obavljeni poslovi:	
+		p Obavljeni poslovi:	
 			textarea#inputObavljeniPoslovi(name="obavljeni_poslovi")
-		p	Početak:	
+		p Početak:	
 			input#inputPocetak(type="date", name="datum_pocetka", required)
-		p	Završetak:	
+		p Završetak:	
 			input#inputZavrsetak(type="date", name="datum_zavrsetka", required)
 		p
 			button#btnSubmit(type="submit") Kreiraj

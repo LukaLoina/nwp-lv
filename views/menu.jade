@@ -1,0 +1,14 @@
+
+if locals.user
+  div#menu
+  span(class=name) 
+    = user.name
+  p
+  a(href='/projects') Projekti
+  p
+  a(href='/logout') Odjava
+else
+  div#menu
+  a(href='/login') Prijava
+  p
+  a(href='/register') Registracija

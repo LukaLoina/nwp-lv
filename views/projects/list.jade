@@ -1,0 +1,35 @@
+extends ../layout
+
+block content
+    h1.
+         #{title}
+         
+    table
+        thead
+          tr: th  Projects
+        tbody
+          each project, i in projects
+            tr
+              td
+                = project.naziv
+              td
+                = project.opis
+              td
+                = project.cijena
+              td
+                = project.obavljeni_poslovi
+              td
+                = project.datum_pocetka
+              td
+                = project.datum_zavrsetka
+              td
+                form(action='/projects/#{project._id}/edit',method='post',enctype='application/x-www-form-urlencoded')
+                    input(type='hidden',value='DELETE',name='_method')
+                    button(type='submit').
+                        Obriši
+                p 
+                    a(href='/projects/#{project._id}/edit') Uredi
+                p
+                    a(href='/projects/#{project._id}') Prikaži
+                p
+                    a(href='/projects/#{project._id}/member') Dodaj člana

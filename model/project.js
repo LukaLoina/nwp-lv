@@ -6,6 +6,8 @@ var projectSchema = new mongoose.Schema({
   obavljeni_poslovi: String,
   datum_pocetka: Date,
   datum_zavrsetka: Date,
-  clanovi_tima: [String]
+  voditelj_tima: {type: mongoose.Schema.Types.ObjectId, ref: 'Users'},
+  clanovi_tima: [{type: mongoose.Schema.Types.ObjectId, ref: 'Users'}],
+  arhiviran: Boolean
 });
 mongoose.model('Project', projectSchema);
